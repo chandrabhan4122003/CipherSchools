@@ -9,13 +9,13 @@ struct Node
    Node(int val)
    {
       data = val;
-      left = right = nullptr;
+      left = right = NULL;
    }
 };
 
 Node *insertBST(Node *root, int val)
 {
-   if (root == nullptr)
+   if (root == NULL)
    {
       return new Node(val);
    }
@@ -32,7 +32,7 @@ Node *insertBST(Node *root, int val)
 
 Node *searchInBST(Node *root, int key)
 {
-   if (root == nullptr || root->data == key)
+   if (root == NULL || root->data == key)
    {
       return root;
    }
@@ -46,7 +46,7 @@ Node *searchInBST(Node *root, int key)
 Node *inorderSucc(Node *root)
 {
    Node *curr = root;
-   while (curr && curr->left != nullptr)
+   while (curr && curr->left != NULL)
    {
       curr = curr->left;
    }
@@ -55,7 +55,7 @@ Node *inorderSucc(Node *root)
 
 Node *deleteInBST(Node *root, int key)
 {
-   if (root == nullptr)
+   if (root == NULL)
       return root;
 
    if (key < root->data)
@@ -68,13 +68,13 @@ Node *deleteInBST(Node *root, int key)
    }
    else
    {
-      if (root->left == nullptr)
+      if (root->left == NULL)
       {
          Node *temp = root->right;
          delete root;
          return temp;
       }
-      else if (root->right == nullptr)
+      else if (root->right == NULL)
       {
          Node *temp = root->left;
          delete root;
@@ -90,7 +90,7 @@ Node *deleteInBST(Node *root, int key)
 
 void inorder(Node *root)
 {
-   if (root == nullptr)
+   if (root == NULL)
       return;
    inorder(root->left);
    cout << root->data << " ";
@@ -99,7 +99,7 @@ void inorder(Node *root)
 
 void preorder(Node *root)
 {
-   if (root == nullptr)
+   if (root == NULL)
       return;
    cout << root->data << " ";
    preorder(root->left);
@@ -108,16 +108,40 @@ void preorder(Node *root)
 
 void postorder(Node *root)
 {
-   if (root == nullptr)
+   if (root == NULL)
       return;
    postorder(root->left);
    postorder(root->right);
    cout << root->data << " ";
 }
 
+Node *findMin(Node *root)
+{
+   if (root == NULL)
+      return NULL;
+   Node *curr = root;
+   while (curr->left != NULL)
+   {
+      curr = curr->left;
+   }
+   return curr;
+}
+
+Node *findMax(Node *root)
+{
+   if (root == NULL)
+      return NULL;
+   Node *curr = root;
+   while (curr->right != NULL)
+   {
+      curr = curr->right;
+   }
+   return curr;
+}
+
 int main()
 {
-   Node *root = nullptr;
+   Node *root = NULL;
    root = insertBST(root, 5);
    insertBST(root, 1);
    insertBST(root, 3);
@@ -137,13 +161,33 @@ int main()
    postorder(root);
    cout << endl;
 
-   if (searchInBST(root, 5) == nullptr)
+   if (searchInBST(root, 5) == NULL)
    {
       cout << "Key does not exist" << endl;
    }
    else
    {
       cout << "Key exists" << endl;
+   }
+
+   Node *minNode = findMin(root);
+   if (minNode != NULL)
+   {
+      cout << "Minimum value in BST: " << minNode->data << endl;
+   }
+   else
+   {
+      cout << "BST is empty" << endl;
+   }
+
+   Node *maxNode = findMax(root);
+   if (maxNode != NULL)
+   {
+      cout << "Maximum value in BST: " << maxNode->data << endl;
+   }
+   else
+   {
+      cout << "BST is empty" << endl;
    }
 
    root = deleteInBST(root, 5);
